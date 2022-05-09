@@ -1,19 +1,19 @@
 # rtk-modules
 
 Library of helper utilities for splitting Redux case reducers, thunks, and selectors
-across multiple file modules.  Particularly useful in conjunction with Redux Toolkit's
+across multiple file modules. Particularly useful in conjunction with Redux Toolkit's
 `createSlice` and React Redux's `useSelector`
 
 ## Rationale
 
 Redux, and in particular Redux Toolkit, encourage breaking redux store's up into feature-
-specific "slices."  In some code bases, it is desirable to further break up those slices
+specific "slices." In some code bases, it is desirable to further break up those slices
 into modules containing the feature-specific case reducers, selectors, and async thunks.
 This can reduce file size, make testing easier, and even allow for isolating individual
 redux slices in their own npm packages.
 
 This library provides some helper functions to make this process easier while preserving
-the excellent type safety and type inferences provided by Redux Toolkit.  It also provides
+the excellent type safety and type inferences provided by Redux Toolkit. It also provides
 some testing utilities to make testing these modularized files easier.
 
 ## Helper Utilities
@@ -30,7 +30,7 @@ A function to make it easier to create an object full of named case reducers tha
      // reducer logic here
    })
   }
- 
+
  //in slice.ts
  createSlice({
    ...
@@ -41,18 +41,18 @@ A function to make it easier to create an object full of named case reducers tha
 ### `produceThunkReducerInjector`
 
 A function to make it easier to create asyncThunk case reducers in the same file
-you make the asyncThunks themselves, but following the same `builder` pattern 
+you make the asyncThunks themselves, but following the same `builder` pattern
 used by `createSlice`
 
 ```typescript
  const createCounterThunkReducerInjector = produceThunkReducerInjector<CounterState>()
- 
+
  export const injectReducers = createCounterThunkReducerInjector( builder => {
    builder.addCase(someAsyncThunk.fulfilled, (state, action) => {
      // case reducer code here
    })
  }
- 
+
  //in slice.ts
  createSlice({
    ...
@@ -68,25 +68,25 @@ root state.
 
 ```typescript
 const counterPlainSelectors = {
-  aSelector: (state:CounterState) => {
+  aSelector: (state: CounterState) => {
     //select some state
   }
 }
 
 const counterSelectorCreators = {
-  aSelectorCreator: (x:number) => (state:CounterState) => { 
-    //select some state 
+  aSelectorCreator: (x: number) => (state: CounterState) => {
+    //select some state
   }
 }
 
-export const counterSelectors = produceRootSelectors<RootState>()(counterSlice.name)(
-   counterPlainSelectors, counterSelectorCreators
-)
+export const counterSelectors = produceRootSelectors<RootState>()(
+  counterSlice.name
+)(counterPlainSelectors, counterSelectorCreators)
 
 // in a component
 const mySelection = useSelector(counterSelectors.aSelector)
 const myOtherSelection = useSelector(counterSelectors.aSelector(4))
- ```
+```
 
 ## Testing Utilities
 
@@ -97,9 +97,12 @@ containing the relevant slice.
 
 ```typescript
 // creates a mock store containing just the slice and with state configured
-// based on an injected initial state or a function that transforms the 
+// based on an injected initial state or a function that transforms the
 // slices initial state
-let testAsyncThunk = produceAsyncThunkTester(counterSlice, injectedStartingState)
+let testAsyncThunk = produceAsyncThunkTester(
+  counterSlice,
+  injectedStartingState
+)
 
 it("example test", async () => {
   // runs the passed in async thunk through the store and returns the result
@@ -114,8 +117,8 @@ it("example test", async () => {
 ### `produceMockState` and `produceStateSetter`
 
 Lightweight functional programming utilities to create mock state from an initial
-state using a set of transformer functions.  `produceStateSetter` generates the
-transformer functions, and `produceMockState` composes them together and uses 
+state using a set of transformer functions. `produceStateSetter` generates the
+transformer functions, and `produceMockState` composes them together and uses
 them to transform an initial state object.
 
 ```typescript
@@ -142,3 +145,13 @@ it("example test", () => {
   /// continue with act and assertions of test
 })
 ```
+
+## Examples
+
+See the `example` subdirectory in this repository for a working, commented example of
+a slice that uses all these utilities.
+
+---
+
+Copyright 2022 MFB Technologies, Inc.
+See LICENSE for terms of use
