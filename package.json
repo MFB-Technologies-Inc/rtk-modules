@@ -1,5 +1,5 @@
 {
-  "name": "rtk-modules",
+  "name": "@mfbtech/rtk-modules",
   "version": "1.0.0",
   "description": "Utilities to help modularize and test redux toolkit slice elements",
   "main": "lib/index.js",
