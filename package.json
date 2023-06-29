@@ -25,7 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "prettier": "^2.4",
     "@rushstack/eslint-config": "~2.5.1",
-    "@reduxjs/toolkit": "^1.7.1",
+    "@reduxjs/toolkit": "^1.9.5",
     "redux": "~4.2.0",
     "redux-thunk": "~2.4.1",
     "immer": "^9.0.6"
